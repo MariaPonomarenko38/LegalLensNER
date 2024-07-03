@@ -1,0 +1,1 @@
+TRAINING_CONFIG_PATH = "./configs/config_train.json"

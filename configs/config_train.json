@@ -1,0 +1,11 @@
+{
+    "dataset_repo": "darrow-ai/LegalLensNER",
+    "results_dir": "./models/v1",
+    "pretrained_ckpt": "lmsys/vicuna-7b-v1.5",
+    "lora_r": 64,
+    "epochs": 1,
+    "dropout": 0.1,
+    "train_sample_fraction": 0.99,
+    "neftune": null,
+    "full_tune": false
+}

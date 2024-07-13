@@ -40,7 +40,7 @@ class Predictor:
     
 if __name__ == '__main__':
     
-    #path = '/root/KodKobzar/src/models/v2/assets'
+    path = '/root/KodKobzar/src/models/v2/assets'
     predictor = Predictor(model_load_path=path)
     prediction = predictor.predict(prompt="USER: Хто був першим президентом України? ASSISTANT: ")
     print(prediction)

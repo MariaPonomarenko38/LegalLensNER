@@ -25,7 +25,7 @@ class Predictor:
         return input_ids
 
     @torch.inference_mode()
-    def predict(self, prompt: str, max_target_length: int = 60, temperature: float = 0.01) -> str:
+    def predict(self, prompt: str, max_target_length: int = 150, temperature: float = 0.01) -> str:
         input_ids = self.get_input_ids(prompt)
         outputs = self.model.generate(
             input_ids=input_ids,
@@ -40,7 +40,7 @@ class Predictor:
     
 if __name__ == '__main__':
     
-    path = '/root/KodKobzar/src/models/v2/assets'
+    path = '/root/LegalLensNER/models/v1/assets'
     predictor = Predictor(model_load_path=path)
-    prediction = predictor.predict(prompt="USER: Хто був першим президентом України? ASSISTANT: ")
+    prediction = predictor.predict(prompt="USER: warning to all sellers out there ! this e-commerce giant has been pulling the wool over our eyes. they launched a new business initiative, promising us growth and success. but all theyve done is inflate their earnings guidance and mislead us about the initiatives success. theyve been reducing their financial guidance, blaming it on softer sales and unplanned expenses. but the truth is, they cant handle the increased inventory levels and are facing margin pressures. its all a scheme to inflate their stock price. were the ones paying the price for their lies ! ASSISTANT: ")
     print(prediction)

@@ -5,7 +5,7 @@ import numpy as np
 import pandas as pd
 import pickle
 import json
-from data import prepare_dataset, prepare_dataset_exam
+from data import prepare_dataset
 from datasets import concatenate_datasets
 from peft import (
     LoraConfig,
@@ -100,7 +100,7 @@ def main(args):
         args=training_args,
         dataset_text_field="instructions",
         neftune_noise_alpha=args['neftune'], 
-        data_collator=collator,
+        #data_collator=collator,
     )
 
     trainer_stats = trainer.train()

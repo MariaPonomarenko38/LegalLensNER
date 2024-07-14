@@ -58,6 +58,31 @@ def transform_to_tagged_string(tokens, tags):
     
     return tagged_string.strip()
 
+def transform_to_tagged_string1(tokens, tags):
+    tagged_string = ""
+    current_tag = None
+
+    for token, tag in zip(tokens, tags):
+        if tag == "O":
+            if current_tag:
+                current_tag = None
+            #tagged_string += space(token) + token
+        else:
+            entity = tag.split('-')[1]
+            if current_tag is None:
+                tagged_string += f"; {entity} -" + space(token) + token 
+                current_tag = entity
+            elif current_tag == entity:
+                tagged_string += space(token) + token
+            else:
+                tagged_string += f"; {entity} -"# + space(token) + token 
+                current_tag = entity
+
+    if current_tag:
+        tagged_string += f"{current_tag}"
+    
+    return tagged_string.lstrip("; ")
+
 def prepare_instructions(dataset):
     
     list_tokens = dataset["tokens"]
@@ -65,13 +90,13 @@ def prepare_instructions(dataset):
     instructions = []
 
     for tokens, ner_tags in zip(list_tokens, list_ner_tags):
-        input = CONTEXT
+        input = ""#CONTEXT
         for token in tokens:
             input += space(token) + token
 
         input = input.lstrip()
 
-        output = transform_to_tagged_string(tokens, ner_tags)
+        output = transform_to_tagged_string1(tokens, ner_tags)
         example = TRAINING_PROMPT.format(
             input=input,
             output=output,
@@ -105,9 +130,9 @@ def prepare_dataset(dataset_repo):
 
     return train_prompt_dataset, valid_prompt_dataset
 
-# if __name__ == '__main__':
+if __name__ == '__main__':
     
-#     dataset_name = "darrow-ai/LegalLensNER"
-#     train_prompt_dataset = prepare_dataset(dataset_name)
+    dataset_name = "darrow-ai/LegalLensNER"
+    train_prompt_dataset,val_prompt_dataset = prepare_dataset(dataset_name)
 
-#     t = 1
+    print(len(val_prompt_dataset), len(train_prompt_dataset))
